@@ -173,13 +173,11 @@
       (do (reset-current! "bidi/goto!" h)
           (pushy/set-token! history url)))))
 
-(defn init! [routes-frontend]
-  (reset! routes routes-frontend)
+(defn start-router! [routes-frontend]
   (info "bidi init - routes: " routes-frontend)
+  (reset! routes routes-frontend)
   (info "starting pushy")
   (pushy/start! history)) ; link url => state
-
-
 
 ; here for testing of github pages
 (defn ^:export

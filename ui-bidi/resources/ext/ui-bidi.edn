@@ -6,7 +6,7 @@
                   frontend.page
                   frontend.page.viewer
                   goldly.page.page]
- :cljs-ns-bindings {'ui.bidi {'init! frontend.routes/init!
+ :cljs-ns-bindings {'ui.bidi {'start-router! frontend.routes/start-router!
                               'nav! frontend.routes/nav!
                               'goto! frontend.routes/goto!
                               'hard-redirect! frontend.routes/hard-redirect!
