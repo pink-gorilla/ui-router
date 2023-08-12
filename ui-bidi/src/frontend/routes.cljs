@@ -46,11 +46,7 @@
 (defonce routes (r/atom nil))
 
 
-(defn init! [routes-frontend]
-  (reset! routes routes-frontend)
-  (info "bidi init - routes: " routes-frontend)
-  (info "starting pushy")
-  (pushy/start! history)) ; link url => state
+
 
 
 (defn link
@@ -176,6 +172,13 @@
       (set! (.-location js/window) url)
       (do (reset-current! "bidi/goto!" h)
           (pushy/set-token! history url)))))
+
+(defn init! [routes-frontend]
+  (reset! routes routes-frontend)
+  (info "bidi init - routes: " routes-frontend)
+  (info "starting pushy")
+  (pushy/start! history)) ; link url => state
+
 
 
 ; here for testing of github pages
