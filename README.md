@@ -2,6 +2,8 @@
 
 **End Users** this project is not for you.
 
+A simple front-end page-router using bidi + pushy.
+
 ## Bidi Routing
 
 Bidi is not as highly starred as compojure, but it has important benefits:
