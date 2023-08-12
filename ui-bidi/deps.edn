@@ -1,22 +1,10 @@
 {:paths ["src"
-         "resources"]
+         "resources"] ; goldly ext
  :deps
- {org.clojure/clojure    {:mvn/version "1.11.1"}
-  ;org.clojure/core.async {:mvn/version "1.3.618"}
-  nano-id/nano-id {:mvn/version "1.0.0"} ; nano id
-
-  com.github.oliyh/martian {:mvn/version "0.1.20"}
-  com.github.oliyh/martian-clj-http {:mvn/version "0.1.20"}
-
-  com.draines/postal {:mvn/version "2.0.5"} ; smtp email
-  telegrambot-lib/telegrambot-lib {:mvn/version "2.0.0" ; "1.5.0" ; 2.0.0 no longer has logback.
-                                   ;:exclusions [ch.qos.logback/logback-classic]
-                                   } ; telegram
-
-  org.pinkgorilla/modular {:mvn/version "0.0.33"}
-
+ {bidi/bidi {:mvn/version "2.1.6"}
+        clj-commons/pushy {:mvn/version "0.3.10"}
+        com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
   }
-
 
  :aliases
  {:outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
