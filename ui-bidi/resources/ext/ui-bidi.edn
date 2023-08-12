@@ -18,6 +18,6 @@
                                   'show goldly.page.page/show-page
                                   'add goldly.page.page/add-page}
                     'goldly.nav {'nav frontend.routes/goto!
-                                 'current-route frontend.page/current-route}
+                                 'current-route frontend.routes/current-route}
 
                     }}
