@@ -188,3 +188,7 @@
   (let [handler-kw (keyword handler-str)]
     (info "handler-kw: " handler-kw)
     (goto! handler-kw)))
+
+
+(defn current-route []
+  @current)

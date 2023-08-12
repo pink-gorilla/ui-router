@@ -1,0 +1,23 @@
+{:name "ui-bidi"
+ ; build
+ :lazy-sci true
+ :cljs-namespace [frontend.routes
+                  frontend.routes.events
+                  frontend.page
+                  frontend.page.viewer
+                  goldly.page.page]
+ :cljs-ns-bindings {'ui.bidi {'init! frontend.routes/init!
+                              'nav! frontend.routes/nav!
+                              'goto! frontend.routes/goto!
+                              'hard-redirect! frontend.routes/hard-redirect!
+                              'link frontend.routes/link
+                              'reagent-page frontend.page/reagent-page
+                              'page-viewer frontend.page.viewer/page-viewer
+                              }
+                    'goldly.page {'available goldly.page.page/available-pages
+                                  'show goldly.page.page/show-page
+                                  'add goldly.page.page/add-page}
+                    'goldly.nav {'nav frontend.routes/goto!
+                                 'current-route frontend.page/current-route}
+
+                    }}
