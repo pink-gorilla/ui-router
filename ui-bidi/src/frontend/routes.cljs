@@ -177,7 +177,8 @@
   (info "bidi init - routes: " routes-frontend)
   (reset! routes routes-frontend)
   (info "starting pushy")
-  (pushy/start! history)) ; link url => state
+  (pushy/start! history) ; link url => state
+  nil)
 
 ; here for testing of github pages
 (defn ^:export
