@@ -9,7 +9,6 @@
 
 (defonce static-main-path-atom (atom ""))
 
-
 (defn set-main-path! [path]
   (let [safe-path (if (str/ends-with? path "/")
                     (subs path 0 (dec (count path)))
@@ -45,10 +44,6 @@
 
 (defonce routes (r/atom nil))
 
-
-
-
-
 (defn link
   ([handler]
    ;(info "link for handler: " handler "no-route-params")
@@ -75,6 +70,7 @@
       (str url-handler "?" (url/map->query query-params)))))
 
 (defonce current (r/atom nil))
+
 (defn reset-current! [trigger match]
   (when (not (= match @current))
     (info "reset-current! " match "trigger: " trigger)
@@ -91,7 +87,8 @@
         query-params (->> query
                           (map (fn [[k v]] [(keyword k) v]))
                           (into {}))
-        match (bidi/match-route* routes path options)] ;     ;(bidi/match-route @routes path)
+        match (bidi/match-route* routes path options)]
+        ;(bidi/match-route @routes path)
     ;(info "match: " match) 
     ; {{} nil, 
     ;   :route-params {:location "Bali"}, 
@@ -173,12 +170,21 @@
       (do (reset-current! "bidi/goto!" h)
           (pushy/set-token! history url)))))
 
-(defn start-router! [routes-frontend]
+(defn start-router!
+  ([routes-frontend]
+   (start-router! routes-frontend ""))
+  ([routes-frontend entry-path]
   (info "bidi init - routes: " routes-frontend)
   (reset! routes routes-frontend)
+
+  (when (and entry-path
+             (not (str/blank? entry-path)))
+     (info "bidi init - entry path: " entry-path)
+     (set-main-path! entry-path))
+  
   (info "starting pushy")
   (pushy/start! history) ; link url => state
-  nil)
+  nil))
 
 ; here for testing of github pages
 (defn ^:export

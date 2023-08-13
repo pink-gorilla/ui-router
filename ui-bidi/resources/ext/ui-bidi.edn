@@ -13,6 +13,7 @@
                               'link frontend.routes/link
                               'reagent-page frontend.page/reagent-page
                               'page-viewer frontend.page.viewer/page-viewer
+                              'refresh-page frontend.page.viewer/refresh-page
                               }
                     'goldly.page {'available goldly.page.page/available-pages
                                   'show goldly.page.page/show-page
