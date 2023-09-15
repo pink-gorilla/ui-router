@@ -38,6 +38,10 @@
 
 (def page-resolver (atom resolve-page-nothing))
 
+(defn set-resolver! [resolver-fn]
+  (reset! page-resolver resolver-fn))
+
+
 (defn get-page [page-id]
   (if-let [page (get-page-from-dict page-id)]
     page
