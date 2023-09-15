@@ -11,12 +11,14 @@
                               'goto! frontend.routes/goto!
                               'hard-redirect! frontend.routes/hard-redirect!
                               'link frontend.routes/link
-                              'reagent-page frontend.page/reagent-page
+                              'add-page frontend.page/add-page
+                              ;'reagent-page frontend.page/reagent-page
                               'page-viewer frontend.page.viewer/page-viewer
                               'refresh-page frontend.page.viewer/refresh-page
+                              'page-resolver frontend.page/page-resolver
                               }
-                    'goldly.page {'available goldly.page.page/available-pages
-                                  'show goldly.page.page/show-page
+                    'goldly.page {'available frontend.page/available-pages
+                                  ;'show goldly.page.page/show-page
                                   'add goldly.page.page/add-page}
                     'goldly.nav {'nav frontend.routes/goto!
                                  'current-route frontend.routes/current-route}

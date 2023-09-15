@@ -2,7 +2,7 @@
   (:require
    [reagent.core :as r]
    [taoensso.timbre :as timbre :refer-macros [error]]
-   [frontend.page :refer [reagent-page]]))
+   [frontend.page]))
 
 ; shows how to impement error boundary:
 ; https://github.com/reagent-project/reagent/blob/c214466bbcf099eafdfe28ff7cb91f99670a8433/test/reagenttest/testreagent.cljs
@@ -35,29 +35,51 @@
                            (when @error-a (pr-str @error-a))]
                           comp))})))
 
+(defn get-page-handler [{:keys [handler]}]
+  (frontend.page/get-page handler))
+
 (defn show-page
+  ; not quite sure what is the purpose of this. 2023-09-15 awb99
   "shows a page 
    expects: kw and route-map"
   [route-map]
-  (reagent-page route-map))
+  (get-page-handler route-map))
+
+#_(defn show-page
+    "shows a page 
+   expects: kw and route-map"
+    [route-map]
+    (reagent-page route-map))
 
 ;; this is already in webly.
-(defn available-pages
-  "currently available pages that can be used in the routing table
+#_(defn available-pages
+    "currently available pages that can be used in the routing table
    seq of page keywords"
-  []
-  (->> (methods reagent-page)
-       keys
-       (remove #(= :default %))
-       (into [])))
+    []
+    (->> (methods reagent-page)
+         keys
+         (remove #(= :default %))
+         (into [])))
+
+#_(defn add-page
+    "add-page is exposed to sci
+   defines a new browser-based page 
+   that can be used in the routing table to define new pages"
+    [p kw]
+    (defmethod reagent-page kw [route]
+      [error-boundary
+       [p route]]))
+
+(defn wrap-error-boundary [p]
+  (fn [route]
+    [error-boundary
+     [p route]]))
 
 (defn add-page
   "add-page is exposed to sci
    defines a new browser-based page 
    that can be used in the routing table to define new pages"
-  [p kw]
-  (defmethod reagent-page kw [{:keys [_route-params _query-params _handler] :as route}]
-    [error-boundary
-     [p route]]))
+  [p page-id]
+  (frontend.page/add-page page-id (wrap-error-boundary p)))
 
 

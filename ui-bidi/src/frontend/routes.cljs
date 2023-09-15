@@ -16,7 +16,6 @@
     (info "set-main-path!" safe-path)
     (reset! static-main-path-atom safe-path)))
 
-
 (defn entry-path-adjust [path]
   (let [path-adjusted (if (str/blank? @static-main-path-atom)
                         path
@@ -174,17 +173,17 @@
   ([routes-frontend]
    (start-router! routes-frontend ""))
   ([routes-frontend entry-path]
-  (info "bidi init - routes: " routes-frontend)
-  (reset! routes routes-frontend)
+   (info "bidi init - routes: " routes-frontend)
+   (reset! routes routes-frontend)
 
-  (when (and entry-path
-             (not (str/blank? entry-path)))
+   (when (and entry-path
+              (not (str/blank? entry-path)))
      (info "bidi init - entry path: " entry-path)
      (set-main-path! entry-path))
-  
-  (info "starting pushy")
-  (pushy/start! history) ; link url => state
-  nil))
+
+   (info "starting pushy")
+   (pushy/start! history) ; link url => state
+   nil))
 
 ; here for testing of github pages
 (defn ^:export
@@ -193,7 +192,6 @@
   (let [handler-kw (keyword handler-str)]
     (info "handler-kw: " handler-kw)
     (goto! handler-kw)))
-
 
 (defn current-route []
   @current)
