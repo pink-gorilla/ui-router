@@ -1,6 +1,7 @@
 {:paths ["src"
          "resources"] ; goldly ext
- :deps {bidi/bidi {:mvn/version "2.1.6"}
+ :deps {funcool/promesa {:mvn/version "11.0.674"}
+        bidi/bidi {:mvn/version "2.1.6"}
         clj-commons/pushy {:mvn/version "0.3.10"}
         com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
   }
