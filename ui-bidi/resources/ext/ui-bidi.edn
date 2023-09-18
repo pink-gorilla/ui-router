@@ -16,6 +16,7 @@
                               'page-viewer frontend.page.viewer/page-viewer
                               'refresh-page frontend.page.viewer/refresh-page
                               'page-resolver frontend.page/page-resolver
+                              'set-resolver! frontend.page/set-resolver!
                               }
                     'goldly.page {'available frontend.page/available-pages
                                   ;'show goldly.page.page/show-page

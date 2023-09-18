@@ -12,31 +12,28 @@
   []
   (swap! generation inc))
 
-
 ; https://stackoverflow.com/questions/33299746/why-are-multi-methods-not-working-as-functions-for-reagent-re-frame
 ; ^{:key @current-route} [pages @current-route]
 
 (defn get-page-handler [{:keys [handler]}]
   (get-page handler))
 
-
 (defn- show-message [msg]
-  (fn [_route] [:div msg])
-  )
+  (fn [_route] [:div msg]))
 
 (defn page-viewer []
   (fn []
     (let [h (get-page-handler @current)
           view (if (p/promise? h)
-                (cond 
-                  (p/pending? h)  (show-message "Loading Page ...")
-                  (p/resolved? h) @h
-                  (p/rejected? h) (show-message "Page could not be loaded!")
-                 :else (show-message "Page - something crazy happened!"))
+                 (cond
+                   (p/pending? h)  (show-message "Loading Page ...")
+                   (p/resolved? h) @h
+                   (p/rejected? h) (show-message "Page could not be loaded!")
+                   :else (show-message "Page - something crazy happened!"))
                  h)]
-    ^{:key [@generation @current]}
+      ^{:key [@generation @current]}
       [view @current])))
-    
+
 
 
 

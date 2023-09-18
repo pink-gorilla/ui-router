@@ -1,5 +1,6 @@
 (ns frontend.page
   (:require
+   [promesa.core :as p]
    [frontend.routes :refer [current]]))
 
 (def page-dict (atom {}))
@@ -41,11 +42,14 @@
 (defn set-resolver! [resolver-fn]
   (reset! page-resolver resolver-fn))
 
-
 (defn get-page [page-id]
   (if-let [page (get-page-from-dict page-id)]
     page
     (if-let [page (@page-resolver page-id)]
-      page
+      (if (p/promise? page)
+        (if (p/resolved? page)
+          @page
+          [:div "loading page.."])
+        page)
       not-found-page)))
 
