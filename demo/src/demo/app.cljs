@@ -23,7 +23,8 @@
 (defn page-resolver-promise [s]
   (let [page (get page-dict s)]
     (if page
-      (p/resolved page)
+      ;(p/resolved page)
+      (p/delay 3000 page)
       nil)))
 
 (set-resolver! page-resolver-promise)
