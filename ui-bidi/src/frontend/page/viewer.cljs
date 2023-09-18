@@ -3,7 +3,8 @@
    [promesa.core :as p]
    [reagent.core :as r]
    [frontend.page :refer [get-page]]
-   [frontend.routes :refer [current]]))
+   [frontend.routes :refer [current]]
+   [frontend.page.error-boundary :refer [error-boundary]]))
 
 (defonce generation (r/atom 1))
 
@@ -29,14 +30,15 @@
     (fn [hp]
        @view)))
 
-
 (defn page-viewer []
   (let [h (get-page-handler @current)
         view (if (p/promise? h)
                (handler-promise-view h)
                (r/atom h))]
       ^{:key [@generation @current]}
-      [@view @current]))
+    [error-boundary
+     [@view @current]]  
+    ))
 
 
 
