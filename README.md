@@ -15,3 +15,15 @@ Bidi is not as highly starred as compojure, but it has important benefits:
 - No linting errors due to macros.
 - Easy testing of route definitions, and handler results (including wrapping routes)
 
+
+## Demo
+
+in demo directory:
+```
+clj -X:webly:npm-install
+clj -X:webly:compile
+clj -X:webly:jetty
+
+
+```
+

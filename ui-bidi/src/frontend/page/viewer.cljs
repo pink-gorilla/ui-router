@@ -2,6 +2,7 @@
   (:require
    [promesa.core :as p]
    [reagent.core :as r]
+   [taoensso.timbre :refer-macros [debug info error]]
    [frontend.page :refer [get-page]]
    [frontend.routes :refer [current]]
    [frontend.page.error-boundary :refer [error-boundary]]))
@@ -19,26 +20,37 @@
 (defn get-page-handler [{:keys [handler]}]
   (get-page handler))
 
-(defn handler-promise-view [hp]
-  (let [view (r/atom [:div "loading page.."])]
-    (p/then hp (fn [result]
-                (reset! view result)))
-    (p/catch hp (fn [err]
-                 (println "error in page: " err)
-                 (reset! view [:div "page loading error!"])
-                 ))
-    (fn [hp]
-       @view)))
+(defn message [m]
+  (fn [_route]
+    [:div m]))
 
-(defn page-viewer []
-  (let [h (get-page-handler @current)
+(defn handler-promise-view [hp]
+  (info "page is a promise: " hp)
+  (let [view (r/atom (message "loading page.."))]
+    (p/then hp (fn [result]
+                 (info "page-promise has been resolved!")
+                 (info "result: " result)
+                 (reset! view result)
+                 ))
+    (p/catch hp (fn [err]
+                 (error "error in resolving page-promise: " err)
+                 (reset! view (message "page loading error!"))
+                 ))
+     view))
+
+(defn view-route [route]
+  (let [h (get-page-handler route)
         view (if (p/promise? h)
                (handler-promise-view h)
                (r/atom h))]
-      ^{:key [@generation @current]}
-    [error-boundary
-     [@view @current]]  
-    ))
+    (fn [route]
+      [@view route])))
+
+
+(defn page-viewer []
+  [error-boundary
+   ^{:key [@generation @current]}
+     [view-route @current]])
 
 
 
