@@ -33,16 +33,16 @@
            :src-dirs ["src"]})
 
 (defn jar [_]
+  (println "Building jar ..")
   (b/write-pom opts)
   (b/copy-dir {:src-dirs ["src"
-                          "resources"
-                          "target/node_modules"]
+                          "resources"]
                :target-dir class-dir})
   (b/jar {:class-dir class-dir
           :jar-file jar-file}))
 
 (defn deploy "Deploy the JAR to Clojars." [_]
-  (println "Deploying to Clojars..")
+  (println "Deploying to Clojars ..")
   (dd/deploy {:installer :remote
               ;:sign-releases? true
               :pom-file (b/pom-path (select-keys opts [:lib :class-dir]))
