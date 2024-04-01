@@ -1,6 +1,6 @@
 {:name "ui-bidi"
  ; build
- :lazy-sci false
+ :lazy false
  :cljs-namespace [frontend.routes
                   frontend.routes.events
                   frontend.page

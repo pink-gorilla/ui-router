@@ -7,26 +7,6 @@
     [pushy.core :as pushy]
     [cemerick.url :as url]))
 
-(defonce static-main-path-atom (atom ""))
-
-(defn set-main-path! [path]
-  (let [safe-path (if (str/ends-with? path "/")
-                    (subs path 0 (dec (count path)))
-                    path)]
-    (info "set-main-path!" safe-path)
-    (reset! static-main-path-atom safe-path)))
-
-(defn entry-path-adjust [path]
-  (let [path-adjusted (if (str/blank? @static-main-path-atom)
-                        path
-                        (str/replace path @static-main-path-atom ""))]
-    (info "entry-path-adjust path: " path " adjusted: " path-adjusted)
-    path-adjusted))
-
-(defn html-static-adjust [path]
-  (if (str/ends-with? path "/index.html")
-    (str/replace path "/index.html" "/")
-    path))
 
 ; bidi does not handle query params
 ; idea how to solve the problem: https://github.com/juxt/bidi/issues/51
@@ -113,9 +93,7 @@
 
 (defn on-url-change [path & options]
   (info "url did change to: " path) ; " options:" options  
-  (let [options (or options {})
-        path (entry-path-adjust path)
-        path (html-static-adjust path)]
+  (let [options (or options {})]
     (info "adjusted path: " path)
     ;(info "routes: " @routes)
     ;(info "options:  " options)
@@ -170,28 +148,12 @@
           (pushy/set-token! history url)))))
 
 (defn start-router!
-  ([routes-frontend]
-   (start-router! routes-frontend ""))
-  ([routes-frontend entry-path]
+  [routes-frontend]
    (info "bidi init - routes: " routes-frontend)
    (reset! routes routes-frontend)
-
-   (when (and entry-path
-              (not (str/blank? entry-path)))
-     (info "bidi init - entry path: " entry-path)
-     (set-main-path! entry-path))
-
    (info "starting pushy")
    (pushy/start! history) ; link url => state
-   nil))
-
-; here for testing of github pages
-(defn ^:export
-  G [handler-str]
-  (info "handler-str: " handler-str)
-  (let [handler-kw (keyword handler-str)]
-    (info "handler-kw: " handler-kw)
-    (goto! handler-kw)))
+   nil)
 
 (defn current-route []
   @current)
