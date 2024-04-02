@@ -1,7 +1,7 @@
  (ns frontend.routes
    (:require
     [clojure.string :as str]
-    [taoensso.timbre :refer-macros [info infof error]]
+    [taoensso.timbre :refer-macros [info infof warn error]]
     [reagent.core :as r]
     [bidi.bidi :as bidi]
     [pushy.core :as pushy]
@@ -27,12 +27,12 @@
   ([handler]
    ;(info "link for handler: " handler "no-route-params")
    (let [url (bidi/path-for @routes handler)]
-     ;(info "bidi link url: " url)
+     (warn "bidi handler [" handler "] => url: " url)
      url))
   ([handler route-params]
    ;(info "link for handler: " handler "route-params: " route-params)
    (let [url (apply (partial bidi/path-for @routes) handler route-params)]
-     ;(info "bidi link url: " url)
+     (warn "bidi handler [" handler " params: " route-params "] => url: " url)
      url)))
 
 (defn- map->params [m]
@@ -123,9 +123,10 @@
 
 (defn goto-route! [route]
   (let [url (route->url route)]
-    (infof "bidi/goto route: %s url: %s" route url)
+    (infof "goto-route: %s url: %s" route url)
     (reset-current! "goto-route" route)
-    (pushy/set-token! history url)))
+    (when url 
+      (pushy/set-token! history url))))
 
 (defn goto! [handler & params]
   (let [params-map (params->map params) ; params is a map without {} example:  :a 1 :b 2  
