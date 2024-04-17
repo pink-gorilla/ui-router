@@ -5,7 +5,7 @@
 
 (current-route)
 
-(nav! 'demo.page/bongo)
+(nav! 'reval.page.viewer/viewer-page)
 
 
 (rf/dispatch [:bidi/goto :devtools])
