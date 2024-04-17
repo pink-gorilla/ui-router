@@ -2,26 +2,30 @@
          "target/node_modules"  ; css png resources from npm modules 
          ]
  :deps {org.pinkgorilla/ui-bidi {:local/root "../ui-bidi" :deps/manifest :deps}
-        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
-        
-        }
+        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}}
  :aliases
- {
-  :webly {:extra-deps {org.pinkgorilla/webly {:mvn/version "0.4.631"
-                                              :exclusions  [org.pinkgorilla/ui-bidi]}}
+ {:webly {:extra-deps {org.pinkgorilla/webly {:mvn/version "0.5.671"
+                                              :exclusions  [org.pinkgorilla/ui-bidi]}
+                       org.pinkgorilla/ui-repl {:mvn/version "0.1.104"}  ; http cors test
+                       }
           :extra-paths ["src" "resources"]
           :exec-fn webly.app.app/webly-build
-          :exec-args {:config ["webly/config.edn"
-                               "demo.edn"] 
+          :exec-args {:config {}
                       :profile "npm-install"}}
+
   :npm-install {:exec-args {:profile "npm-install"}}
   :compile {:exec-args {:profile "compile2"}}
+  :release {:exec-args {:profile "release"}}
+  :release-adv {:exec-args {:profile "release-adv"}}
+  :static {:exec-args {:profile "static"}}
+  :ci {:exec-args {:profile "ci"}}
 
-  :jetty {:exec-fn modular.system/start!
-          :exec-args {:profile "jetty"
-                      :services "services.edn"}}
+   ; RUN SERVICES (keep running)
+  :run {:exec-fn modular.system/start!
+        :exec-args {:profile "jetty"
+                    :services "demo-services.edn"}}
 
-  
+
 
   ;
   }}

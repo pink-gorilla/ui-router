@@ -6,12 +6,13 @@ A simple front-end page-router using bidi + pushy.
 
 ## Bidi Routing
 
-Bidi is not as highly starred as compojure, but it has important benefits:
+Bidi has important benefits:
 - It is isomorphic (clj and cljs) (forget compojure AND secretary) 
 - It has a clear separation of concerns with handlers (both for 
   clj (ring-handler) and cljs (pushy)
 - It is bi-directional; this allows making links! 
-- It does not use macros, this means routes can be easily tested, transformed, sent between client-server, stored, modified. 
+- It does not use macros, this means routes can be easily tested, transformed, 
+  sent between client-server, stored, modified. 
 - No linting errors due to macros.
 - Easy testing of route definitions, and handler results (including wrapping routes)
 
@@ -23,7 +24,7 @@ in demo directory:
 ```
 clj -X:webly:npm-install
 clj -X:webly:compile
-clj -X:webly:jetty
+clj -X:webly:run
 
 
 ```

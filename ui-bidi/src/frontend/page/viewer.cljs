@@ -34,7 +34,10 @@
                  ))
     (p/catch hp (fn [err]
                  (error "error in resolving page-promise: " err)
-                 (reset! view (message "page loading error!"))
+                 (reset! view (message [:p.text-xl.text-bold.text-blue-500.bg-red-200
+                                          "page load error!"
+                                        [:p.text-red-500 
+                                          (str err)]]))
                  ))
      view))
 

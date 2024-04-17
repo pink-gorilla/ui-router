@@ -1,0 +1,13 @@
+{:name "demo-bidi"
+ :lazy false
+ :cljs-namespace [demo.page]
+ :cljs-ns-bindings {'demo.page {'page-main demo.page/page-main
+                                'page-test demo.page/page-test
+                                }}
+ ; runtime
+ :cljs-routes {""        demo.page/page-main
+               "test"    demo.page/page-test}
+ 
+
+}
+                   
