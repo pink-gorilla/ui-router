@@ -1,7 +1,7 @@
 (ns demo.notebook.page-nav
   (:require
    [re-frame.core :as rf]
-   [frontend.page :refer [nav! current-route]]))
+   [frontend.routes :refer [nav! current-route]]))
 
 (current-route)
 
