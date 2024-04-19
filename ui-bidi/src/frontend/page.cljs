@@ -1,6 +1,8 @@
 (ns frontend.page
   (:require
-   [frontend.routes :refer [current]]))
+   [frontend.routes :refer [current]]
+   [webly.spa.resolve :refer [get-resolver]]
+   ))
 
 (def page-dict (atom {}))
 
@@ -34,7 +36,8 @@
 (defn get-page [page-id]
   (if-let [page (get-page-from-dict page-id)]
     page
-    (if-let [page (@page-resolver page-id)]
+    (if-let [resolve-fn (get-resolver)
+             page (resolve-fn page-id)]
       page
       not-found-page)))
 
