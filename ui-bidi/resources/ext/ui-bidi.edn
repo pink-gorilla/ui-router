@@ -2,7 +2,7 @@
  ; build
  :lazy false
  :cljs-namespace [frontend.routes
-                  frontend.routes.events
+                  frontend.routes.events ; side-effects
                   frontend.page
                   frontend.page.viewer]
  :cljs-ns-bindings {'frontend.routes {'start-router! frontend.routes/start-router!

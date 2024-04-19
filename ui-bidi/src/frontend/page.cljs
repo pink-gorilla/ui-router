@@ -33,11 +33,16 @@
 (defn set-resolver! [resolver-fn]
   (reset! page-resolver resolver-fn))
 
+
+(defn resolve-page [page]
+  (let [resolve-fn (get-resolver)]
+     (resolve-fn page)))
+
+
 (defn get-page [page-id]
   (if-let [page (get-page-from-dict page-id)]
     page
-    (if-let [resolve-fn (get-resolver)
-             page (resolve-fn page-id)]
+    (if-let [page (resolve-page page-id)]
       page
       not-found-page)))
 
