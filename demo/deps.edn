@@ -1,7 +1,7 @@
 {:paths ["src"
          "target/node_modules"  ; css png resources from npm modules 
          ]
- :deps {org.pinkgorilla/ui-bidi {:local/root "../ui-bidi" :deps/manifest :deps}
+ :deps {org.pinkgorilla/ui-bidi {:local/root ".." :deps/manifest :deps}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}}
  :aliases
  {:webly {:extra-deps {org.pinkgorilla/webly {:mvn/version "0.5.671"

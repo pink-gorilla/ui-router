@@ -3,18 +3,20 @@
  :lazy false
  :cljs-namespace [frontend.routes
                   frontend.routes.events ; side-effects
-                  frontend.page
-                  frontend.page.viewer]
+                  frontend.page.viewer
+                  frontend.page.service]
  :cljs-ns-bindings {'frontend.routes {'start-router! frontend.routes/start-router!
                                       'nav! frontend.routes/nav!
                                       'goto! frontend.routes/goto!
                                       'hard-redirect! frontend.routes/hard-redirect!
                                       'link frontend.routes/link
                                       'current-route frontend.routes/current-route}
-                    'frontend.page {'add-page frontend.page/add-page
-                                    'get-page frontend.page/get-page
-                                    'available-pages frontend.page/available-pages
-                                    'page-resolver frontend.page/page-resolver
-                                    'set-resolver! frontend.page/set-resolver!}
                     'frontend.page.viewer {'page-viewer frontend.page.viewer/page-viewer
-                                           'refresh-page frontend.page.viewer/refresh-page}}}
+                                           'refresh-page frontend.page.viewer/refresh-page}
+                    'frontend.page.service {'start-bidi frontend.page.service/start-bidi}}
+  
+  ; runtime
+ :cljs-service {:config-fn frontend.page.service/get-cljs-routes
+                :start-fn frontend.page.service/start-bidi}
+ 
+ }
