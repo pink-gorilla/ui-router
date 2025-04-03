@@ -2,6 +2,8 @@
  :extension {:disabled #{"ui-bidi"}}
 
  :spa {:title "Router Demo"
-       :mount-fn demo.reitit/mount}
+       ;:mount-fn demo.reitit/mount
+       :mount-fn demo.reitit-auth/mount
+       }
 
  }
