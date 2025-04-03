@@ -1,0 +1,19 @@
+{:modular (modular.system/modular-env)
+ :components
+ {:config1 {:start (modular.config/load-config! (:config #ref [:modular]))}
+  :config {:start (deref (clip/ref :config1))}
+  
+  :exts {:start (extension/discover (:extension (clip/ref :config)))}
+    
+  
+  :webly {:start (webly.spa/start-webly
+                  {:exts (clip/ref :exts)
+                   :ctx {}}
+                  (clip/ref :config)
+                  (:profile #ref [:modular]))
+          :stop (webly.spa/stop-webly this)}
+
+
+
+
+  }}

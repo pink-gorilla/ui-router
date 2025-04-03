@@ -3,12 +3,12 @@
    [demo.helper :refer [link-dispatch]]))
 
 (defn page-main [_route]
-  [:div
-   [:h1 "ui-bidi demo"]
+  [:div.bg-blue-300
+   [:h1 "This is the main page."]
    [:p [link-dispatch [:bidi/goto 'demo.page/page-test] "test"]]
    [:p [link-dispatch [:bidi/goto 'demo.page/page-unknown] "unknown-page"]]])
 
 (defn page-test [_route]
   [:div
-   [:h1 "ui-bidi test-page (not via page-registry!)"]
+   [:h1.text-bold.text-blue-500 "I am a test-page!"]
    [:p [link-dispatch [:bidi/goto 'demo.page/page-main] "main"]]])
