@@ -17,8 +17,6 @@ A simple front-end page-router using reitit.
   discovered routes.
 
 
-
-
 ## Demo
 
 in demo directory:
@@ -32,7 +30,8 @@ clj -X:webly:page:run
 clj -X:webly:auth:compile
 clj -X:webly:auth:run
 
-
+clj -X:webly:simple:compile
+clj -X:webly:simple:run
 
 
 ```

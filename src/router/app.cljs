@@ -2,8 +2,8 @@
   (:require
    [reagent.dom.client :as rdom]
    [fipp.edn :as fedn]
-   [router.core :refer [current-route]]))
-
+   [router.core :refer [current-route]]
+   [router.view :refer [viewer]]))
 
 (defn not-found []
   [:div 
@@ -13,10 +13,17 @@
 (defn app []
   (let [match @current-route
         {:keys [data]} match
-        view (:view data)]
+        {:keys [view name]} data]
     [:div
-     (if view
+     (cond 
+       ; match, and defined view(-fn)
+       view
        [view match]
+       ; match, and only a name (use viewer to lookup name as a symbol)
+       name 
+       [viewer match]
+       ; we got no match
+       :else 
        [not-found])]))
  
 

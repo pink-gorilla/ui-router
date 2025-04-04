@@ -1,4 +1,4 @@
-(ns frontend.page.error-boundary
+(ns router.view.error-boundary
   (:require
    [taoensso.timbre :as timbre :refer-macros [error]]
    [reagent.core :as r]))

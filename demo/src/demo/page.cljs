@@ -14,6 +14,7 @@
      [:li [:a {:href (rfe/href 'demo.page/page-item {:id 1})} "Item 1"]]
      [:li [:a {:href (rfe/href 'demo.page/page-item {:id 2} {:a 42})} "Item 2"]]
      [:li [:a {:href (rfe/href 'demo.page/page-item {:id 3} {:foo "bar"})} "Item 3"]]
+     [:li [:a {:href (rfe/href 'demo.page/page-lazy {:id 3} {:foo "bar"})} "Lazy"]]
      [:li [:a {:href (rfe/href 'demo.page/page-unknown {:id 2} {:foo "bar"} "zzz")} "unknown"]]
      ]])
  
@@ -31,10 +32,19 @@
    [:pre (with-out-str (fedn/pprint match))]
    [nav]])
  
+(defn page-lazy [match]
+  [:div
+   [:h1.text-bold.text-blue-500 "I am the lazy-page!"]
+   [:hr]
+   [:p "Match details:"]
+   [:pre (with-out-str (fedn/pprint match))]
+   [nav]])
+
 
  (def routes
    [["/" {:name 'demo.page/page-main :view page-main}]
     ["/about" {:name :about :view (fn [] [:h1 "About"])}]
+    ["/lazy" {:name 'demo.page/page-lazy}]
     ["/:id/item" {:name 'demo.page/page-item :view page-item
                   :parameters {:path {:id s/Int}
                                :query {(s/optional-key :a) s/Int
