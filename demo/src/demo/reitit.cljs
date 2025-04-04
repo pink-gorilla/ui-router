@@ -1,12 +1,13 @@
 (ns demo.reitit
-  (:require [reagent.core :as r]
-            [reagent.dom.client :as rdom]
-            [reitit.frontend :as rf]
-            [reitit.frontend.easy :as rfe]
-            [reitit.frontend.controllers :as rfc]
-            [reitit.coercion.schema :as rsc]
-            [schema.core :as s]
-            [fipp.edn :as fedn]))
+  (:require
+   [reagent.core :as r]
+   [reagent.dom.client :as rdom]
+   [reitit.frontend :as rf]
+   [reitit.frontend.easy :as rfe]
+   [reitit.frontend.controllers :as rfc]
+   [reitit.coercion.schema :as rsc]
+   [schema.core :as s]
+   [fipp.edn :as fedn]))
 
 (defn home-page []
   [:div
@@ -49,34 +50,40 @@
   (fn [_]
     (apply js/console.log params)))
 
+(def user-routes 
+  [[""
+    {:name ::frontpage
+     :view home-page
+     :controllers [{:start (log-fn "start" "frontpage controller")
+                    :stop (log-fn "stop" "frontpage controller")}]}]
+   ["items"
+         ;; Shared data for sub-routes
+    {:view item-page
+     :controllers [{:start (log-fn "start" "items controller")
+                    :stop (log-fn "stop" "items controller")}]}
+   
+    [""
+     {:name ::item-list
+      :controllers [{:start (log-fn "start" "item-list controller")
+                     :stop (log-fn "stop" "item-list controller")}]}]
+    ["/:id"
+     {:name ::item
+      :parameters {:path {:id s/Int}
+                   :query {(s/optional-key :a) s/Int
+                           (s/optional-key :foo) s/Keyword}}
+      :controllers [{:parameters {:path [:id]}
+                     :start (fn [{:keys [path]}]
+                              (js/console.log "start" "item controller" (:id path)))
+                     :stop (fn [{:keys [path]}]
+                             (js/console.log "stop" "item controller" (:id path)))}]}]]
+   
+
+  ]
+  )
+
 (def routes
   (rf/router
-   ["/"
-    [""
-     {:name ::frontpage
-      :view home-page
-      :controllers [{:start (log-fn "start" "frontpage controller")
-                     :stop (log-fn "stop" "frontpage controller")}]}]
-    ["items"
-      ;; Shared data for sub-routes
-     {:view item-page
-      :controllers [{:start (log-fn "start" "items controller")
-                     :stop (log-fn "stop" "items controller")}]}
-
-     [""
-      {:name ::item-list
-       :controllers [{:start (log-fn "start" "item-list controller")
-                      :stop (log-fn "stop" "item-list controller")}]}]
-     ["/:id"
-      {:name ::item
-       :parameters {:path {:id s/Int}
-                    :query {(s/optional-key :a) s/Int
-                            (s/optional-key :foo) s/Keyword}}
-       :controllers [{:parameters {:path [:id]}
-                      :start (fn [{:keys [path]}]
-                               (js/console.log "start" "item controller" (:id path)))
-                      :stop (fn [{:keys [path]}]
-                              (js/console.log "stop" "item controller" (:id path)))}]}]]]
+   (into ["/"] user-routes)
    {:data {:controllers [{:start (log-fn "start" "root-controller")
                           :stop (log-fn "stop" "root controller")}]
            :coercion rsc/coercion}}))
@@ -89,7 +96,7 @@
                     (if new-match
                       (assoc new-match :controllers (rfc/apply-controllers (:controllers old-match) new-match))))))
    {:use-fragment true})
-  
+
   ;(rd/render [current-page] (.getElementById js/document "app"))
   (let [root (rdom/create-root (.getElementById js/document "app"))]
     (rdom/render root [current-page])))

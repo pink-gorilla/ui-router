@@ -1,16 +1,16 @@
-{:name "demo-router"
+{:name "demo"
  :lazy true
  :cljs-namespace [demo.page
                   demo.reitit
                   demo.reitit-auth]
  :cljs-ns-bindings {'demo.page {'page-main demo.page/page-main
-                                'page-test demo.page/page-test}
+                                'page-test demo.page/page-test
+                                'routes demo.page/routes}
                     'demo.reitit {'mount demo.reitit/mount}
-                    'demo.reitit-auth {'mount demo.reitit-auth/mount}}
+                    'demo.reitit-auth {'mount demo.reitit-auth/mount}
+                    }
  ; runtime
- :cljs-routes {""        demo.page/page-main
-               "test"    demo.page/page-test}
- 
+ :cljs-routes-reitit demo.page/routes
 
 }
                    

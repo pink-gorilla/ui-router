@@ -1,0 +1,13 @@
+{:name "ui-router"
+ ; build
+ :lazy false
+ :cljs-namespace [router.core
+                  router.service]
+ :cljs-ns-bindings {'router.core {'mount router.core/mount}
+                    'router.service {'start-router router.service/start-router}}
+ 
+  ; runtime
+ :cljs-service {:config-fn router.service/get-cljs-routes
+                :start-fn router.service/start-router}
+ 
+ }

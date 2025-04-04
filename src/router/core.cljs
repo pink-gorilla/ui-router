@@ -2,43 +2,29 @@
   (:require 
    [reagent.core :as r]
    [reitit.frontend :as rtf]
-   [reitit.frontend.easy :as rfe]))
-
-(def routes
-  [["/" {:name :home :view (fn [] [:h1 "Home"])}]
-   ["/about" {:name :about :view (fn [] [:h1 "About"])}]])
-
-(def router (rtf/router routes))
-
-
+   [reitit.frontend.easy :as rfe]
+   [reitit.coercion.schema :as rsc]
+   ))
 
 (def current-route (r/atom nil))
 
 (defn on-navigate [match _]
+  ; on-navigate updates current-route when the URL changes.
   (reset! current-route match))
 
-(defn init-router! []
-  (rfe/start! router on-navigate {:use-fragment false}))
+(defn log-fn [& params]
+  (fn [_]
+    (apply js/console.log params)))
 
-; Fragment router
-; Fragment is simple integration which stores the current route in URL fragment, 
-; i.e. after #. This means the route is never part of the request URI and server will always know which file to return (index.html) .
-
-
-; on-navigate updates current-route when the URL changes.
-
-; rfe/start! initializes the router.
-
-(defn nav []
-  [:nav
-   [:a {:href (rfe/href :home)} "Home | "]
-   [:a {:href (rfe/href :about)} "About"]])
-
-; (rfe/href ::bar {} {:q :hello})
+(defn start-router! [routes]
+  (println "starting reitit router with routes: " routes)
+  (let [router (rtf/router routes
+                           {:data {:controllers [{:start (log-fn "start" "root-controller")
+                                                  :stop (log-fn "stop" "root controller")}]
+                                   :coercion rsc/coercion}}
+                           )]
+    (rfe/start! router on-navigate {:use-fragment true})))
 
 
-(defn app []
-  (let [{:keys [view]} @current-route]
-    [:div
-     [nav]
-     (if view [view] [:h1 "Page not found"])]))
+
+

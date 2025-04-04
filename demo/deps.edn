@@ -13,9 +13,7 @@
  :aliases
  {; BUILD BUNDLE (then exit)
   :webly {:extra-deps {org.pinkgorilla/webly {:mvn/version "0.9.722"
-                                              :exclusions  [org.pinkgorilla/ui-bidi]}
-                       org.pinkgorilla/ui-repl {:mvn/version "0.1.115"}  ; http cors test
-                       }
+                                              :exclusions  [org.pinkgorilla/ui-bidi]}}
           :extra-paths ["src"]
           :exec-fn webly.spa/webly-build
           :exec-args {:config ["demo-config.edn"] 

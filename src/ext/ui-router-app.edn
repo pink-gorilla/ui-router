@@ -1,0 +1,7 @@
+{:name "ui-router-app"
+ ; build
+ :lazy true
+ :cljs-namespace [router.app]
+ :cljs-ns-bindings {'router.app {'mount router.app/mount}}
+  
+ }

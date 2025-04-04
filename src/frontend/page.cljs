@@ -1,13 +1,13 @@
 (ns frontend.page
   (:require
-   [frontend.routes :refer [current]]
+   [router.core :refer [current-route]]
    [webly.spa.resolve :refer [get-resolver]]
    ))
 
 (defn not-found-page []
   [:div.bg-red-500.m-5
-   [:h1 (str "page " (:handler @current) " - not found!")]
-   [:p "Current Page:" (str @current)]])
+   [:h1 (str "page " (:handler @current-route) " - not found!")]
+   [:p "Current Page:" (str @current-route)]])
 
 
 (defn resolve-page [page]
