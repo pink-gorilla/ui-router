@@ -1,9 +1,5 @@
 {:extension {:disabled #{"ui-bidi" "webly-spa-app"}}
 
- :spa {:title "Router Demo"
-       ;:mount-fn demo.reitit/mount
-       ;:mount-fn demo.reitit-auth/mount
-       :mount-fn router.app/mount
-       }
+
 
  }
