@@ -1,14 +1,11 @@
 {:paths ["src"
          "target/node_modules"  ; css png resources from npm modules 
          ]
- :deps {org.pinkgorilla/ui-bidi {:local/root ".." :deps/manifest :deps}
+ :deps {fipp/fipp {:mvn/version "0.6.14"}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
-
-        metosin/reitit {:mvn/version "0.8.0"}
-        metosin/reitit-schema {:mvn/version "0.8.0"}
-        metosin/reitit-frontend {:mvn/version "0.8.0"}
-
-        fipp/fipp {:mvn/version "0.6.14"}}
+        org.pinkgorilla/ui-router {:local/root ".." :deps/manifest :deps}
+        ;metosin/reitit {:mvn/version "0.8.0"}
+        }
  :aliases
  {; BUILD BUNDLE (then exit)
   :webly {:extra-deps {org.pinkgorilla/webly {:mvn/version "0.9.722"
