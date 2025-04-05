@@ -2,29 +2,47 @@
          "target/node_modules"  ; css png resources from npm modules 
          ]
  :deps {org.pinkgorilla/ui-bidi {:local/root ".." :deps/manifest :deps}
-        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}}
+        org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
+
+        metosin/reitit {:mvn/version "0.8.0"}
+        metosin/reitit-schema {:mvn/version "0.8.0"}
+        metosin/reitit-frontend {:mvn/version "0.8.0"}
+
+        fipp/fipp {:mvn/version "0.6.14"}}
  :aliases
- {:webly {:extra-deps {org.pinkgorilla/webly {:mvn/version "0.5.671"
-                                              :exclusions  [org.pinkgorilla/ui-bidi]}
-                       org.pinkgorilla/ui-repl {:mvn/version "0.1.104"}  ; http cors test
-                       }
-          :extra-paths ["src" "resources"]
-          :exec-fn webly.app.app/webly-build
-          :exec-args {:config {}
-                      :profile "npm-install"}}
+ {; BUILD BUNDLE (then exit)
+  :webly {:extra-deps {org.pinkgorilla/webly {:mvn/version "0.9.722"
+                                              :exclusions  [org.pinkgorilla/ui-bidi]}}
+          :extra-paths ["src"]
+          :exec-fn webly.spa/webly-build
+          :exec-args {:profile "npm-install"}}
 
   :npm-install {:exec-args {:profile "npm-install"}}
-  :compile {:exec-args {:profile "compile2"}}
+  :compile {:exec-args {:profile "compile"}}
   :release {:exec-args {:profile "release"}}
   :release-adv {:exec-args {:profile "release-adv"}}
   :static {:exec-args {:profile "static"}}
   :ci {:exec-args {:profile "ci"}}
 
-   ; RUN SERVICES (keep running)
+  ;; MODE 
+  :page {:exec-args {:config ["demo-config.edn"
+                              {:spa {:title "Demo"
+                                     :mount-fn router.app/mount}}]}}
+
+  :auth {:exec-args {:config ["demo-config.edn"
+                              {:spa {:title "Reitit Auth Demo"
+                                     :mount-fn demo.reitit-auth/mount}}]}}
+  
+  :simple {:exec-args {:config ["demo-config.edn"
+                              {:spa {:title "Reitit Simple Demo"
+                                     :mount-fn demo.reitit/mount}}]}}
+
+
+
+  ; RUN SERVICES (keep running)
   :run {:exec-fn modular.system/start!
         :exec-args {:profile "jetty"
                     :services "demo-services.edn"}}
-
 
 
   ;
