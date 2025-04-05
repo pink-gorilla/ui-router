@@ -3,8 +3,8 @@
    [clojure.tools.build.api :as b]
    [deps-deploy.deps-deploy :as dd]))
 
-(def lib 'org.pinkgorilla/ui-bidi)
-(def version (format "0.1.%s" (b/git-count-revs nil)))
+(def lib 'org.pinkgorilla/ui-router)
+(def version (format "0.2.%s" (b/git-count-revs nil)))
 (def class-dir "target/classes")
 (def basis (b/create-basis {:project "deps.edn"}))
 (def jar-file (format "target/%s-%s.jar" (name lib) version))
@@ -21,9 +21,9 @@
     [:developer
      [:name "pink-gorilla"]]]
    [:scm
-    [:url "https://github.com/pink-gorilla/ui-bidi/"]
-    [:connection "scm:git:git://github.com/pink-gorilla/ui-bidi.git"]
-    [:developerConnection "scm:git:ssh://git@github.com/pink-gorilla/ui-bidi.git"]]])
+    [:url "https://github.com/pink-gorilla/ui-router/"]
+    [:connection "scm:git:git://github.com/pink-gorilla/ui-router.git"]
+    [:developerConnection "scm:git:ssh://git@github.com/pink-gorilla/ui-router.git"]]])
 
 (def opts {:class-dir class-dir
            :lib lib
