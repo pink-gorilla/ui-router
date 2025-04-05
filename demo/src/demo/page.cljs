@@ -16,21 +16,24 @@
      [:li [:a {:href (rfe/href 'demo.page/page-item {:id 3} {:foo "bar"})} "Item 3"]]
      [:li [:a {:href (rfe/href 'demo.page/page-lazy {:id 3} {:foo "bar"})} "Lazy"]]
      [:li [:a {:href (rfe/href 'demo.page/page-unknown {:id 2} {:foo "bar"} "zzz")} "unknown"]]
+     [:li [:a {:href (rfe/href :bad {:id 2} {:foo "bar"} "zzz")} "bad"]]
      ]])
  
+ (defn wrap-nav [page match]
+   [:div.bg-blue-300
+    [page match]
+    [nav]])
 
 (defn page-main [_match]
-  [:div.bg-blue-300
-   [:h1 "This is the main page."]
-   [nav]])
+  [:h1 "This is the main page."])
 
 (defn page-item [match]
-  [:div
+  [:div 
    [:h1.text-bold.text-blue-500 "I am the item-page!"]
    [:hr]
    [:p "Match details:"]
    [:pre (with-out-str (fedn/pprint match))]
-   [nav]])
+   ])
  
 (defn page-lazy [match]
   [:div
@@ -38,13 +41,17 @@
    [:hr]
    [:p "Match details:"]
    [:pre (with-out-str (fedn/pprint match))]
-   [nav]])
+   ])
+
+(defn page-bad [match]
+  (throw (ex-info "something bad happend" {:message "this is for testing"})))
 
 
  (def routes
    [["/" {:name 'demo.page/page-main :view page-main}]
     ["/about" {:name :about :view (fn [] [:h1 "About"])}]
     ["/lazy" {:name 'demo.page/page-lazy}]
+    ["/bad" {:name :bad :view page-bad}]
     ["/:id/item" {:name 'demo.page/page-item :view page-item
                   :parameters {:path {:id s/Int}
                                :query {(s/optional-key :a) s/Int

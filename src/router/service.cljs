@@ -6,18 +6,23 @@
    [webly.spa.resolve :refer [get-resolver]]
    [router.core :refer [start-router!]]))
 
-(defn start-router [cljs-routes]
-  (info "starting cljs-router: " cljs-routes)
+(defn start-router [{:keys [routes reitit]}]
+  (info "starting cljs-router: " routes)
   (let [;rpath (get-routing-path)
         resolve-fn (get-resolver)
-        routes-all (map #(resolve-fn %) cljs-routes)
-        all-p (p/all routes-all)]
-    (-> all-p
-        (p/then (fn [route-seq]
+        routes-all (map #(resolve-fn %) routes)
+        route-seq-p (p/all routes-all)
+        reitit-wrap (:wrap reitit)
+        reitit-p (if reitit-wrap
+                   (resolve-fn reitit-wrap)
+                   (p/resolved nil))
+        done-p (p/all [route-seq-p reitit-p])]
+    (-> done-p
+        (p/then (fn [[route-seq reitit-wrap-fn]]
                   (info "routes have been successfully resolved.")
                   (let [routes (apply concat route-seq)]
-                    (start-router! routes))))
+                    (start-router! routes reitit-wrap-fn))))
         (p/catch (fn [err]
                    (error "start-router error: " err))))
-    all-p))
+    done-p))
 

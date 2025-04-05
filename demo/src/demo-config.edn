@@ -1,5 +1,5 @@
 {:extension {:disabled #{"ui-bidi" "webly-spa-app"}}
 
-
+ :reitit {:wrap demo.page/wrap-nav}
 
  }
