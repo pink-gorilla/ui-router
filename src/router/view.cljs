@@ -23,9 +23,8 @@
      "error: "
      (pr-str err)]))
 
-(defn symbol->atom [view-symbol]
+(defn symbol->atom [view-a view-symbol]
   (let [resolve-fn (get-resolver)
-        view-a (r/atom nil)
         resolve-p (resolve-fn view-symbol)]
     (-> resolve-p
         (p/then (fn [view-fn]
@@ -33,11 +32,14 @@
         (p/catch (fn [err]
                    (error "error in resolving page-promise: " err)
                    (reset! view-a (create-error-view view-symbol err)))))
-    view-a))
+    nil))
 
 (defn view-route [view-symbol match]
-  (r/with-let
-    [view-fn-a (symbol->atom view-symbol)]
+  (r/with-let [view-fn-a (r/atom nil)
+               view-symbol-a (atom nil)] ; not a reagent atom, to not trigger refresh
+    (when-not (= @view-symbol-a view-symbol)
+      (reset! view-symbol-a view-symbol)
+      (symbol->atom view-fn-a view-symbol))
     (when @view-fn-a
       ;[:> eb/ErrorBoundary {:hash 55}
       [eb/error-boundary  ; 3 ; catch ; error-boundary2
