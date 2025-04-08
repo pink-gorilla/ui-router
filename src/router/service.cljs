@@ -32,5 +32,6 @@
 (defn start-router []
   ; router can not be started in a service, because route-controllers might depend
   ; on other services that are not yet started.
-  (when-let [[routes reitit-wrap-fn] @start-data-a] 
-    (start-router! routes reitit-wrap-fn)))
+  (if-let [[routes reitit-wrap-fn] @start-data-a] 
+    (start-router! routes reitit-wrap-fn)
+    (error "cannot start reitit router - start-data-a is nil")))
