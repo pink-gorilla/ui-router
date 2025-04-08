@@ -6,8 +6,10 @@
    [webly.spa.resolve :refer [get-resolver]]
    [router.core :refer [start-router!]]))
 
-(defn start-router [{:keys [routes reitit]}]
-  (info "starting cljs-router: " routes)
+(defonce start-data-a (atom nil))
+
+(defn init-routes [{:keys [routes reitit]}]
+  (info "starting reitit-routes: " routes)
   (let [;rpath (get-routing-path)
         resolve-fn (get-resolver)
         routes-all (map #(resolve-fn %) routes)
@@ -19,10 +21,16 @@
         done-p (p/all [route-seq-p reitit-p])]
     (-> done-p
         (p/then (fn [[route-seq reitit-wrap-fn]]
-                  (info "routes have been successfully resolved.")
+                  (info "reitit-routes have been successfully inititalized.")
                   (let [routes (apply concat route-seq)]
-                    (start-router! routes reitit-wrap-fn))))
+                    (reset! start-data-a [routes reitit-wrap-fn]))))
         (p/catch (fn [err]
-                   (error "start-router error: " err))))
+                   (error "init reitit-routers error: " err))))
     done-p))
 
+
+(defn start-router []
+  ; router can not be started in a service, because route-controllers might depend
+  ; on other services that are not yet started.
+  (when-let [[routes reitit-wrap-fn] @start-data-a] 
+    (start-router! routes reitit-wrap-fn)))

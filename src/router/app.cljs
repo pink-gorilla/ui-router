@@ -3,7 +3,8 @@
    [reagent.dom.client :as rdom]
    [fipp.edn :as fedn]
    [router.core :refer [current-route reitit-wrap-fn-a]]
-   [router.view :refer [viewer]]))
+   [router.view :refer [viewer]]
+   [router.service :refer [start-router]]))
 
 (defn not-found []
   [:div
@@ -32,5 +33,6 @@
        [not-found])]))
 
 (defn mount []
+  (start-router) ; router gets started only after all services are configured
   (let [root (rdom/create-root (.getElementById js/document "app"))]
     (rdom/render root [page])))

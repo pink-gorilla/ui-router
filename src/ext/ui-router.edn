@@ -4,10 +4,11 @@
  :cljs-namespace [router.core
                   router.service]
  :cljs-ns-bindings {'router.core {'mount router.core/mount}
-                    'router.service {'start-router router.service/start-router}}
+                    'router.service {'init-routes router.service/init-routes
+                                     'start-router router.service/start-router}}
  
   ; runtime
  :cljs-service {:config-fn router.service/get-cljs-routes
-                :start-fn router.service/start-router}
+                :start-fn router.service/init-routes}
  
  }
