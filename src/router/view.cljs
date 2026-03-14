@@ -3,7 +3,7 @@
    [promesa.core :as p]
    [reagent.core :as r]
    [taoensso.timbre :refer-macros [debug info error]]
-   [webly.spa.resolve :refer [get-resolver]]
+   [shadowx.core :refer [get-resolver]]
    [router.view.error-boundary :as eb]))
 
 (defonce generation (r/atom 1))
