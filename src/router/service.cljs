@@ -2,8 +2,7 @@
   (:require
    [taoensso.timbre :refer-macros [info warn error]]
    [promesa.core :as p]
-   ;[webly.spa.mode :refer [get-routing-path]]
-   [webly.spa.resolve :refer [get-resolver]]
+   [shadowx.core :refer [get-resolver]]
    [router.core :refer [start-router!]]))
 
 (defonce start-data-a (atom nil))
