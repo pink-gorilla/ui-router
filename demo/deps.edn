@@ -5,21 +5,17 @@
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
         org.pinkgorilla/ui-router {:local/root ".." :deps/manifest :deps}
         ;metosin/reitit {:mvn/version "0.8.0"}
+        org.pinkgorilla/webly {:mvn/version "0.20.733"}
         }
  :aliases
+ 
  {; BUILD BUNDLE (then exit)
-  :webly {:extra-deps {org.pinkgorilla/webly {:mvn/version "0.9.722"
-                                              :exclusions  [org.pinkgorilla/ui-bidi]}}
-          :extra-paths ["src"]
-          :exec-fn webly.spa/webly-build
-          :exec-args {:profile "npm-install"}}
+  :npm-install {:exec-fn webly.spa/webly-build
+                :exec-args {:profile "npm-install"}}
 
-  :npm-install {:exec-args {:profile "npm-install"}}
-  :compile {:exec-args {:profile "compile"}}
-  :release {:exec-args {:profile "release"}}
-  :release-adv {:exec-args {:profile "release-adv"}}
-  :static {:exec-args {:profile "static"}}
-  :ci {:exec-args {:profile "ci"}}
+  :run {:exec-fn modular.system/start!
+        :exec-args {:profile "watch"
+                    :services "demo-services.edn"}}
 
   ;; MODE 
   :page {:exec-args {:config ["demo-config.edn"
@@ -29,18 +25,11 @@
   :auth {:exec-args {:config ["demo-config.edn"
                               {:spa {:title "Reitit Auth Demo"
                                      :mount-fn demo.reitit-auth/mount}}]}}
-  
+
   :simple {:exec-args {:config ["demo-config.edn"
-                              {:spa {:title "Reitit Simple Demo"
-                                     :mount-fn demo.reitit/mount}}]}}
-
-
-
-  ; RUN SERVICES (keep running)
-  :run {:exec-fn modular.system/start!
-        :exec-args {:profile "jetty"
-                    :services "demo-services.edn"}}
-
+                                {:spa {:title "Reitit Simple Demo"
+                                       :mount-fn demo.reitit/mount}}]}}
+  
 
   ;
   }}

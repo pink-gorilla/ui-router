@@ -1,9 +1,9 @@
-{:name "demo"
- :lazy true
- :cljs-namespace [demo.page
+{:extension/name :demo-app
+ 
+ :cljs/namespace [demo.page
                   demo.reitit
                   demo.reitit-auth]
- :cljs-ns-bindings {'demo.page {'page-main demo.page/page-main
+ :cljs/ns-bindings {'demo.page {'page-main demo.page/page-main
                                 'page-test demo.page/page-test
                                 'page-lazy demo.page/page-lazy
                                 'page-lazy2 demo.page/page-lazy2
@@ -15,5 +15,5 @@
  ; runtime
  :cljs-routes-reitit demo.page/routes
 
-}
+ }
                    

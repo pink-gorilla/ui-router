@@ -5,14 +5,13 @@
   
   :exts {:start (extension/discover (:extension (clip/ref :config)))}
     
-  
   :webly {:start (webly.spa/start-webly
                   {:exts (clip/ref :exts)
                    :ctx {}}
                   (clip/ref :config)
-                  (:profile #ref [:modular]))
+                  (:profile #ref [:modular])
+                  (:version #ref [:modular]))
           :stop (webly.spa/stop-webly this)}
-
 
 
 

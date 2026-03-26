@@ -1,14 +1,16 @@
-{:name "ui-router"
+{:extension/name :ui-router
  ; build
- :lazy false
- :cljs-namespace [router.core
-                  router.service]
- :cljs-ns-bindings {'router.core {'mount router.core/mount}
+ :cljs/module :main
+ :cljs/namespace [router.core
+                  router.service
+                  ;router.app
+                  ]
+ :cljs/ns-bindings {'router.core {'mount router.core/mount}
                     'router.service {'init-routes router.service/init-routes
-                                     'start-router router.service/start-router}}
- 
+                                     'start-router router.service/start-router}
+                    ;'router.app {'mount router.app/mount}
+                    }
+
   ; runtime
  :cljs-service {:config-fn router.service/get-cljs-routes
-                :start-fn router.service/init-routes}
- 
- }
+                :start-fn router.service/init-routes}}

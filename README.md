@@ -21,17 +21,12 @@ A simple front-end page-router using reitit.
 
 in demo directory:
 ```
-clj -X:webly:npm-install
+clj -X:npm-install
 
 One of the following 3:
-clj -X:webly:page:compile
-clj -X:webly:page:run
-
-clj -X:webly:auth:compile
-clj -X:webly:auth:run
-
-clj -X:webly:simple:compile
-clj -X:webly:simple:run
+clj -X:run:page
+clj -X:run:auth
+clj -X:run:simple
 
 
 ```

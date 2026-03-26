@@ -1,5 +1,8 @@
-{:extension {:disabled #{"ui-bidi" "webly-spa-app"}}
+{;:extension {:disabled #{"reagent-spa"}}
 
  :reitit {:wrap demo.page/wrap-nav}
+ 
+ :spa {:title "demo-app"
+       :mount-fn router.app/mount}
 
  }
